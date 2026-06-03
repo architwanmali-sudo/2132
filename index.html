@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Himalayan Explorers | Premium Adventure Tourism</title>
+    <meta name="description" content="Discover the beauty, adventure, and spirit of the Himalayas with The Himalayan Explorers. Authentic, safe, and premium experiences based in Manali.">
+    <meta name="author" content="The Himalayan Explorers">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Himalayan Explorers | Explore Beyond Limits">
+    <meta property="og:description" content="Premium adventure tourism and authentic mountain experiences.">
+    <meta property="og:image" content="https://kommodo.ai/i/e4hl6UMCRo3MWeZBry9s">
+    <meta property="og:url" content="https://thehimalayanexplorers.com">
+    <meta property="og:type" content="website">
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "The Himalayan Explorers",
+      "image": "https://kommodo.ai/i/ueoSeLx4Be1d8ROB81vp",
+      "url": "https://thehimalayanexplorers.com",
+      "telephone": "+919418503080",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Nasogi",
+        "addressLocality": "Manali",
+        "addressRegion": "Himachal Pradesh",
+        "postalCode": "175131",
+        "addressCountry": "IN"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "bestRating": "5",
+        "ratingCount": "150"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Mangal Thakur"
+      }
+    }
+    </script>
+
+    <!-- Google Fonts (Playfair Display for Premium Serif, Inter for Clean Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            accent: '#ea580c', // Elegant Sunrise Orange
+                            light: '#f8fafc',
+                            muted: '#64748b'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        body { background-color: #ffffff; color: #334155; }
+        
+        /* Loading Screen */
+        #loader {
+            position: fixed; inset: 0; z-index: 9999;
+            background: #ffffff; display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        /* Glass Navbar */
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            padding-top: 1rem; padding-bottom: 1rem;
+        }
+        .nav-scrolled .nav-link { color: #0f172a; }
+        .nav-scrolled .nav-logo-text { color: #0f172a; }
+        .nav-scrolled .menu-btn { color: #0f172a; }
+
+        /* Hero Slider */
+        .hero-slide {
+            position: absolute; inset: 0; opacity: 0; 
+            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+            background-size: cover; background-position: center; transform: scale(1.05);
+        }
+        .hero-slide.active { opacity: 1; transform: scale(1); z-index: 10; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.5); z-index: 20; }
+        .hero-content { position: relative; z-index: 30; }
+
+        /* Masonry Gallery */
+        .masonry { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 768px) { .masonry { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry { column-count: 3; } }
+        .masonry-item { break-inside: avoid; margin-bottom: 1.5rem; overflow: hidden; border-radius: 0.5rem; cursor: pointer; }
+        .masonry-item img { transition: transform 0.6s ease; width: 100%; display: block; }
+        .masonry-item:hover img { transform: scale(1.05); }
+
+        /* Lightbox */
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.95); z-index: 99999; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        #lightbox.active { display: flex; opacity: 1; }
+        #lightbox img { max-width: 90%; max-height: 90vh; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+
+        /* High-end Form Inputs */
+        .form-input {
+            border: none; border-bottom: 1px solid #cbd5e1; border-radius: 0;
+            background: transparent; padding: 0.75rem 0; width: 100%;
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus { outline: none; border-color: #ea580c; box-shadow: none; }
+
+        /* Fade In Animation */
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-accent selection:text-white">
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <img src="https://kommodo.ai/i/ueoSeLx4Be1d8ROB81vp" alt="The Himalayan Explorers Logo" class="w-24 animate-pulse">
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-6 transition-all duration-300">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-4 group">
+                <img src="https://kommodo.ai/i/ueoSeLx4Be1d8ROB81vp" alt="Logo" class="w-12 h-12 rounded-full object-cover shadow-md transition-transform group-hover:scale-105">
+                <span class="nav-logo-text text-white font-serif font-semibold text-xl tracking-wide hidden md:block transition-colors">The Himalayan<br>Explorers</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-10 text-white font-medium text-sm tracking-widest uppercase">
+                <a href="#home" class="nav-link hover:text-brand-accent transition-colors">Home</a>
+                <a href="#about" class="nav-link hover:text-brand-accent transition-colors">Our Story</a>
+                <a href="#founder" class="nav-link hover:text-brand-accent transition-colors">Founder</a>
+                <a href="#why-us" class="nav-link hover:text-brand-accent transition-colors">Why Us</a>
+                <a href="#gallery" class="nav-link hover:text-brand-accent transition-colors">Gallery</a>
+                <a href="#contact" class="nav-link hover:text-brand-accent transition-colors">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="menu-btn lg:hidden text-white text-2xl focus:outline-none transition-colors">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-2xl flex-col text-center py-8 space-y-6">
+            <a href="#home" class="mobile-link block text-brand-dark font-medium tracking-widest uppercase text-sm hover:text-brand-accent">Home</a>
+            <a href="#about" class="mobile-link block text-brand-dark font-medium tracking-widest uppercase text-sm hover:text-brand-accent">Our Story</a>
+            <a href="#founder" class="mobile-link block text-brand-dark font-medium tracking-widest uppercase text-sm hover:text-brand-accent">Founder</a>
+            <a href="#why-us" class="mobile-link block text-brand-dark font-medium tracking-widest uppercase text-sm hover:text-brand-accent">Why Us</a>
+            <a href="#gallery" class="mobile-link block text-brand-dark font-medium tracking-widest uppercase text-sm hover:text-brand-accent">Gallery</a>
+            <a href="#contact" class="mobile-link block text-brand-dark font-medium tracking-widest uppercase text-sm hover:text-brand-accent">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-brand-dark">
+        <!-- Real Provided Background Images -->
+        <div class="hero-slide active" style="background-image: url('https://kommodo.ai/i/e4hl6UMCRo3MWeZBry9s');"></div>
+        <div class="hero-slide" style="background-image: url('https://kommodo.ai/i/Ov280WsMAJF2R3CIMWUu');"></div>
+        <div class="hero-slide" style="background-image: url('https://kommodo.ai/i/YD3ozLt2lBZTwuu3Tvfn');"></div>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content container mx-auto px-6 text-center text-white flex flex-col items-center">
+            <p class="text-brand-accent uppercase tracking-[0.4em] font-medium text-xs md:text-sm mb-6 fade-in-up">Welcome to the Mountains</p>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-medium mb-8 leading-tight max-w-5xl fade-in-up" style="transition-delay: 100ms;">
+                Explore Beyond Limits
+            </h1>
+            <p class="text-lg md:text-xl font-light mb-12 max-w-2xl mx-auto text-gray-200 leading-relaxed fade-in-up" style="transition-delay: 200ms;">
+                Discover the beauty, adventure, and spirit of the Himalayas with a team that knows the mountains like home.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 fade-in-up" style="transition-delay: 300ms;">
+                <a href="tel:+919418503080" class="w-full sm:w-auto bg-brand-accent text-white px-10 py-4 rounded-sm font-semibold uppercase tracking-widest text-sm hover:bg-orange-700 transition duration-300">
+                    Call Now
+                </a>
+                <a href="https://wa.me/919418503080?text=Hello%20The%20Himalayan%20Explorers,%20I%20would%20like%20to%20know%20more%20about%20your%20adventures." target="_blank" class="w-full sm:w-auto bg-transparent border border-white text-white px-10 py-4 rounded-sm font-semibold uppercase tracking-widest text-sm hover:bg-white hover:text-brand-dark transition duration-300">
+                    WhatsApp Us
+                </a>
+                <a href="#gallery" class="w-full sm:w-auto text-white underline-offset-4 hover:underline uppercase tracking-widest text-sm font-medium transition">
+                    Explore Gallery
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-24 lg:py-32 bg-brand-light">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+                
+                <div class="w-full lg:w-1/2 fade-in-up relative">
+                    <!-- PLACEHOLDER FOR UPLOADED GROUP PHOTO -->
+                    <!-- Do not use Unsplash, use this clearly marked block so user can replace the src -->
+                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='1000' viewBox='0 0 800 1000'%3E%3Crect fill='%23e2e8f0' width='800' height='1000'/%3E%3Ctext fill='%2364748b' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='bold'%3E[ INSERT UPLOADED GROUP PHOTO HERE ]%3C/text%3E%3C/svg%3E" 
+                         alt="The Himalayan Explorers Group" 
+                         class="w-full h-auto rounded-sm shadow-xl object-cover aspect-[4/5]">
+                    
+                    <div class="absolute -bottom-8 -right-8 bg-white p-6 shadow-lg rounded-sm hidden md:block">
+                        <img src="https://kommodo.ai/i/ueoSeLx4Be1d8ROB81vp" alt="Logo" class="w-20">
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2 fade-in-up">
+                    <span class="text-brand-accent font-medium uppercase tracking-[0.2em] text-sm mb-4 block">About Us</span>
+                    <h2 class="font-serif text-4xl lg:text-5xl font-medium mb-8 text-brand-dark leading-tight">Our Story</h2>
+                    <p class="text-brand-muted mb-6 text-lg leading-relaxed font-light">
+                        The Himalayan Explorers is more than an adventure company; we are a passionate community of mountain lovers dedicated to sharing the raw, untouched beauty of the Himalayas. 
+                    </p>
+                    <p class="text-brand-muted mb-10 text-lg leading-relaxed font-light">
+                        Built on the core principles of safety, authentic experiences, and deep respect for nature, our journeys are crafted to disconnect you from the noise and reconnect you with the wilderness. Whether traversing dense forests or witnessing high-altitude vistas, we promise an experience that stays with you long after the journey ends.
+                    </p>
+                    <div class="grid grid-cols-2 gap-y-4 gap-x-8 text-brand-dark font-medium">
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-mountain text-brand-accent"></i> Authentic Trails</div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-leaf text-brand-accent"></i> Nature Immersion</div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-users text-brand-accent"></i> Community Driven</div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-shield-halved text-brand-accent"></i> Uncompromised Safety</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section id="founder" class="py-24 lg:py-32 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24">
+                
+                <div class="w-full lg:w-1/2 fade-in-up">
+                    <span class="text-brand-accent font-medium uppercase tracking-[0.2em] text-sm mb-4 block">Meet The Guide</span>
+                    <h2 class="font-serif text-4xl lg:text-5xl font-medium mb-2 text-brand-dark">Mangal Thakur</h2>
+                    <p class="text-lg text-brand-muted font-medium mb-8">Founder, The Himalayan Explorers</p>
+                    
+                    <p class="text-brand-muted mb-6 text-lg leading-relaxed font-light">
+                        Born and raised amidst the towering peaks of the Himalayas, Mangal Thakur possesses an intrinsic understanding of the mountains. His life has been defined by exploring trails, studying weather patterns, and embracing local mountain culture.
+                    </p>
+                    <p class="text-brand-muted mb-8 text-lg leading-relaxed font-light">
+                        Through his profound passion for adventure and a strict adherence to safety, Mangal has built a reputation of deep trust among adventurers. His leadership ensures that every expedition is not just a physical journey, but a deeply personal connection with the natural world.
+                    </p>
+                    <img src="https://kommodo.ai/i/ueoSeLx4Be1d8ROB81vp" alt="Signature Logo" class="w-24 opacity-60 grayscale">
+                </div>
+
+                <div class="w-full lg:w-1/2 fade-in-up">
+                    <!-- PLACEHOLDER FOR UPLOADED FOUNDER PHOTO -->
+                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='900' viewBox='0 0 800 900'%3E%3Crect fill='%23f8fafc' width='800' height='900'/%3E%3Ctext fill='%2364748b' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' font-weight='bold'%3E[ INSERT UPLOADED MANGAL THAKUR PHOTO HERE ]%3C/text%3E%3C/svg%3E" 
+                         alt="Mangal Thakur - Founder" 
+                         class="w-full h-auto rounded-sm shadow-xl object-cover aspect-[4/4.5]">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why-us" class="py-24 bg-brand-dark text-white text-center">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-3xl mx-auto mb-16 fade-in-up">
+                <span class="text-brand-accent font-medium uppercase tracking-[0.2em] text-sm mb-4 block">The Explorer Difference</span>
+                <h2 class="font-serif text-4xl lg:text-5xl font-medium mb-6">Why Choose Us</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                <div class="fade-in-up">
+                    <i class="fa-solid fa-map-location-dot text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Experienced Local Guides</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">Deep-rooted knowledge of every trail and terrain.</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 100ms;">
+                    <i class="fa-solid fa-heart-pulse text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Safety First</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">Uncompromised safety protocols and preparation.</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 200ms;">
+                    <i class="fa-solid fa-campground text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Quality Equipment</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">High-end camping gear for maximum comfort.</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 300ms;">
+                    <i class="fa-solid fa-hand-holding-hand text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Personal Attention</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">Small groups guaranteeing individualized care.</p>
+                </div>
+                <div class="fade-in-up">
+                    <i class="fa-solid fa-compass text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Authentic Experiences</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">Immersive cultural and wilderness journeys.</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 100ms;">
+                    <i class="fa-solid fa-image text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Beautiful Locations</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">Curated paths revealing nature's masterpieces.</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 200ms;">
+                    <i class="fa-solid fa-star text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">Trusted By Adventurers</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">5.0 Star rated consistently by our community.</p>
+                </div>
+                <div class="fade-in-up" style="transition-delay: 300ms;">
+                    <i class="fa-solid fa-headset text-3xl text-brand-accent mb-4"></i>
+                    <h3 class="font-serif text-xl font-medium mb-2">24/7 Support</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed">Always available for guidance and inquiries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section id="gallery" class="py-24 bg-brand-light">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 fade-in-up">
+                <div>
+                    <span class="text-brand-accent font-medium uppercase tracking-[0.2em] text-sm mb-4 block">Captures</span>
+                    <h2 class="font-serif text-4xl lg:text-5xl font-medium text-brand-dark">Photo Gallery</h2>
+                </div>
+                <p class="text-brand-muted font-light mt-4 md:mt-0 text-sm italic">Real moments from our expeditions</p>
+            </div>
+
+            <!-- Provided Real Images Only -->
+            <div class="masonry fade-in-up">
+                <div class="masonry-item" onclick="openLightbox('https://kommodo.ai/i/eXw4vZcpGgXP3PUTnDrV')">
+                    <img src="https://kommodo.ai/i/eXw4vZcpGgXP3PUTnDrV" alt="Gallery Image 1" loading="lazy">
+                </div>
+                <div class="masonry-item" onclick="openLightbox('https://kommodo.ai/i/UxyP2a9PwAff3j8ERyX8')">
+                    <img src="https://kommodo.ai/i/UxyP2a9PwAff3j8ERyX8" alt="Gallery Image 2" loading="lazy">
+                </div>
+                <div class="masonry-item" onclick="openLightbox('https://kommodo.ai/i/gxwJYNFY7ww9tcCFHbjj')">
+                    <img src="https://kommodo.ai/i/gxwJYNFY7ww9tcCFHbjj" alt="Gallery Image 3" loading="lazy">
+                </div>
+                <div class="masonry-item" onclick="openLightbox('https://kommodo.ai/i/gm3OF6tfjD5sph7YWG8L')">
+                    <img src="https://kommodo.ai/i/gm3OF6tfjD5sph7YWG8L" alt="Gallery Image 4" loading="lazy">
+                </div>
+                <div class="masonry-item" onclick="openLightbox('https://kommodo.ai/i/Qk6GWFL8aeusYwlK0zj8')">
+                    <img src="https://kommodo.ai/i/Qk6GWFL8aeusYwlK0zj8" alt="Gallery Image 5" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="reviews" class="py-24 bg-white">
+        <div class="container mx-auto px-6 md:px-12 text-center max-w-4xl fade-in-up">
+            <i class="fa-solid fa-quote-right text-5xl text-gray-200 mb-8 block"></i>
+            <div class="text-[#f59e0b] text-xl mb-6 tracking-widest">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <h3 class="font-serif text-2xl md:text-3xl font-medium text-brand-dark leading-relaxed mb-8">
+                "Best experience with Sir Mangal Thakur. Best amenities and highly experienced instructors. The location was amazing, the tents were comfortable, the equipment quality was excellent, and the planning was outstanding. Everyone should go with them."
+            </h3>
+            <p class="text-brand-accent font-semibold tracking-widest uppercase text-sm">— Dr. Vikrant Wanmali</p>
+        </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section class="py-20 bg-brand-light border-y border-gray-200 text-center">
+        <div class="container mx-auto px-6 fade-in-up">
+            <i class="fa-brands fa-instagram text-4xl text-brand-dark mb-4"></i>
+            <h2 class="font-serif text-2xl font-medium text-brand-dark mb-2">Follow Our Journey</h2>
+            <a href="https://www.instagram.com/thehimalayanexplorers" target="_blank" class="text-brand-accent hover:text-brand-dark transition font-medium tracking-wide">@thehimalayanexplorers</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-24">
+                
+                <div class="w-full lg:w-1/3 fade-in-up">
+                    <span class="text-brand-accent font-medium uppercase tracking-[0.2em] text-sm mb-4 block">Connect</span>
+                    <h2 class="font-serif text-4xl font-medium mb-10 text-brand-dark">Get in Touch</h2>
+                    
+                    <div class="space-y-8">
+                        <a href="tel:+919418503080" class="flex items-start gap-4 group">
+                            <i class="fa-solid fa-phone mt-1 text-gray-300 text-xl group-hover:text-brand-accent transition"></i>
+                            <div>
+                                <p class="text-sm text-brand-muted uppercase tracking-widest mb-1">Call Us</p>
+                                <p class="text-lg font-medium text-brand-dark group-hover:text-brand-accent transition">+91 94185 03080</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://wa.me/919418503080?text=Hello%20The%20Himalayan%20Explorers,%20I%20would%20like%20to%20know%20more%20about%20your%20adventures." target="_blank" class="flex items-start gap-4 group">
+                            <i class="fa-brands fa-whatsapp mt-1 text-gray-300 text-xl group-hover:text-[#25D366] transition"></i>
+                            <div>
+                                <p class="text-sm text-brand-muted uppercase tracking-widest mb-1">WhatsApp</p>
+                                <p class="text-lg font-medium text-brand-dark group-hover:text-[#25D366] transition">Message us directly</p>
+                            </div>
+                        </a>
+
+                        <a href="https://maps.google.com/?q=Nasogi,+Manali,+Himachal+Pradesh+175131" target="_blank" class="flex items-start gap-4 group">
+                            <i class="fa-solid fa-location-dot mt-1 text-gray-300 text-xl group-hover:text-brand-accent transition"></i>
+                            <div>
+                                <p class="text-sm text-brand-muted uppercase tracking-widest mb-1">Location</p>
+                                <p class="text-md font-medium text-brand-dark group-hover:text-brand-accent transition leading-relaxed">
+                                    The Himalayan Explorers<br>
+                                    Nasogi, Manali<br>
+                                    Himachal Pradesh 175131
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="w-full lg:w-2/3 bg-brand-light p-8 md:p-12 rounded-sm fade-in-up">
+                    <form onsubmit="event.preventDefault(); alert('Inquiry Sent! We will get back to you shortly.');">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <input type="text" placeholder="Your Name" required class="form-input text-brand-dark">
+                            </div>
+                            <div>
+                                <input type="tel" placeholder="Phone Number" required class="form-input text-brand-dark">
+                            </div>
+                            <div class="md:col-span-2">
+                                <input type="email" placeholder="Email Address" required class="form-input text-brand-dark">
+                            </div>
+                            <div class="md:col-span-2">
+                                <textarea rows="4" placeholder="Your Message" class="form-input text-brand-dark resize-none"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="bg-brand-dark text-white px-10 py-4 font-semibold uppercase tracking-widest text-sm hover:bg-brand-accent transition duration-300 w-full sm:w-auto rounded-sm">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white pt-20 pb-10">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-800 pb-12 mb-8">
+                
+                <!-- Brand -->
+                <div>
+                    <img src="https://kommodo.ai/i/ueoSeLx4Be1d8ROB81vp" alt="Logo" class="w-16 h-16 rounded-full mb-6">
+                    <h3 class="font-serif text-xl mb-4">The Himalayan Explorers</h3>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6 max-w-sm">
+                        Premium adventure tourism and authentic mountain experiences based in the heart of the Himalayas.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/thehimalayanexplorers" target="_blank" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/919418503080" target="_blank" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="tel:+919418503080" class="text-gray-400 hover:text-white transition text-xl"><i class="fa-solid fa-phone"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="md:mx-auto">
+                    <h4 class="font-serif text-lg mb-6 tracking-wide">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm font-light">
+                        <li><a href="#about" class="hover:text-brand-accent transition">Our Story</a></li>
+                        <li><a href="#founder" class="hover:text-brand-accent transition">Meet The Founder</a></li>
+                        <li><a href="#why-us" class="hover:text-brand-accent transition">Why Choose Us</a></li>
+                        <li><a href="#gallery" class="hover:text-brand-accent transition">Gallery</a></li>
+                        <li><a href="#contact" class="hover:text-brand-accent transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Info -->
+                <div>
+                    <h4 class="font-serif text-lg mb-6 tracking-wide">Contact Info</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm font-light">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-brand-accent"></i>
+                            Nasogi, Manali, Himachal Pradesh 175131
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-brand-accent"></i>
+                            +91 94185 03080
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-star text-brand-accent"></i>
+                            5.0 Google Rating
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs font-light tracking-wide">
+                <p>&copy; <span id="year"></span> The Himalayan Explorers. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Premium Adventures in Manali</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
+        <a href="https://wa.me/919418503080?text=Hello%20The%20Himalayan%20Explorers,%20I%20would%20like%20to%20know%20more%20about%20your%20adventures." target="_blank" class="w-14 h-14 bg-[#25D366] text-white rounded-full flex justify-center items-center text-2xl shadow-lg hover:-translate-y-1 transition-transform">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+    
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+        <a href="tel:+919418503080" class="w-12 h-12 bg-brand-dark border-2 border-white text-white rounded-full flex justify-center items-center text-lg shadow-lg md:hidden">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+        <button id="scrollToTop" class="w-12 h-12 bg-brand-accent text-white rounded-full flex justify-center items-center text-lg shadow-lg opacity-0 pointer-events-none transition-opacity duration-300">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Gallery Fullscreen">
+        <button class="absolute top-6 right-8 text-white text-4xl hover:text-brand-accent transition focus:outline-none">&times;</button>
+    </div>
+
+    <!-- Javascript -->
+    <script>
+        // Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 800);
+            }, 500);
+        });
+
+        // Sticky Navbar & Scroll To Top
+        const navbar = document.getElementById('navbar');
+        const scrollToTop = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                navbar.classList.remove('py-6');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+                navbar.classList.add('py-6');
+            }
+
+            if (window.scrollY > 500) {
+                scrollToTop.classList.remove('opacity-0', 'pointer-events-none');
+                scrollToTop.classList.add('opacity-100');
+            } else {
+                scrollToTop.classList.add('opacity-0', 'pointer-events-none');
+                scrollToTop.classList.remove('opacity-100');
+            }
+        });
+
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            
+            // Toggle hamburger / close icon
+            const icon = mobileMenuBtn.querySelector('i');
+            if(mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-xmark');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        // Hero Slider (Fade transitions)
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 6000);
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        window.openLightbox = function(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        window.closeLightbox = function() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Scroll Reveal Animations
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
